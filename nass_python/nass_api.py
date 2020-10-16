@@ -1,6 +1,5 @@
 import requests
 
-
 nass_url = "http://quickstats.nass.usda.gov/api/"
 
 def nass_count(api_key, source_desc=None, sector_desc=None, group_desc=None, commodity_desc=None, short_desc=None, domain_desc=None, agg_level_desc=None, domaincat_desc=None, statisticcat_desc=None, state_name=None, asd_desc=None, county_name=None, region_desc=None, zip_5=None, watershed_desc=None, year=None, freq_desc=None, reference_period_desc=None):
@@ -18,7 +17,7 @@ def nass_count(api_key, source_desc=None, sector_desc=None, group_desc=None, com
             inputs.pop(item)
         else:
             # make sure the desc inputs are all uppercase, and strings
-            if item != 'format' and item != 'numeric_vals':
+            if item != 'numeric_vals':
                 inputs[item] = str((inputs[item])).upper()
             
             # add on the url parameters
@@ -26,7 +25,16 @@ def nass_count(api_key, source_desc=None, sector_desc=None, group_desc=None, com
     
     # make the request
     r = requests.get(base_url)
-    print(r.content)
+    
+    # validate the response
+    status = r.status_code
+
+    if status >= 200 and status < 300:
+        # success
+        return r.json()['count']
+    else:
+        return 'Response code ' + str(status) + ': ' + r.json()['error'][0]
+    
 
 def nass_data(api_key, source_desc=None, sector_desc=None, group_desc=None, commodity_desc=None, short_desc=None, domain_desc=None, agg_level_desc=None, domaincat_desc=None, statisticcat_desc=None, state_name=None, asd_desc=None, county_name=None, region_desc=None, zip_5=None, watershed_desc=None, year=None, freq_desc=None, reference_period_desc=None, format=None, numeric_vals=None):
     
@@ -43,7 +51,7 @@ def nass_data(api_key, source_desc=None, sector_desc=None, group_desc=None, comm
             inputs.pop(item)
         else:
             # make sure the desc inputs are all uppercase, and strings
-            if item != 'format' and item != 'numeric_vals':
+            if item != 'numeric_vals':
                 inputs[item] = str((inputs[item])).upper()
             
             # add on the url parameters
@@ -52,8 +60,15 @@ def nass_data(api_key, source_desc=None, sector_desc=None, group_desc=None, comm
     # make the request
     print(base_url)
     r = requests.get(base_url)
-    print(r.content)
-    return r
+    
+    # validate the response
+    status = r.status_code
+
+    if status >= 200 and status < 300:
+        # success
+        return r.json()
+    else:
+        return 'Response code ' + str(status) + ': ' + r.json()['error'][0]
 
 
 
@@ -75,17 +90,21 @@ def nass_param(api_key, param=None, source_desc=None, sector_desc=None, group_de
             # make sure the desc inputs are all uppercase, and strings
             if item != 'param':
                 inputs[item] = str((inputs[item])).upper()
-            
+            else:
+                inputs[item] = str((inputs[item])).lower()
             # add on the url parameters
             base_url += '&' + item + '=' + requests.utils.quote(inputs[item]) #encodes unsafe / reserved chars in the user input (such as in ANIMALS & PRODUCTS)
 
     # make the request
     print(base_url)
     r = requests.get(base_url)
-    print(r.content)
-    return r
+    
+    # validate the response
+    status = r.status_code
+    
+    if status >= 200 and status < 300:
+        # success
+        return r.json()
+    else:
+        return 'Response code ' + str(status) + ': ' + r.json()['error'][0]
 
-
-#nass_param('31F43E8A-05B2-3383-81B1-8E8811AE700D', year=2018, commodity_desc='Cattle', param='state_name')
-
-nass_count('31F43E8A-05B2-3383-81B1-8E8811AE700D')
