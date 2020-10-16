@@ -58,7 +58,6 @@ def nass_data(api_key, source_desc=None, sector_desc=None, group_desc=None, comm
             base_url += '&' + item + '=' + requests.utils.quote(inputs[item]) #encodes unsafe / reserved chars in the user input (such as in ANIMALS & PRODUCTS)
     
     # make the request
-    print(base_url)
     r = requests.get(base_url)
     
     # validate the response
@@ -96,7 +95,6 @@ def nass_param(api_key, param=None, source_desc=None, sector_desc=None, group_de
             base_url += '&' + item + '=' + requests.utils.quote(inputs[item]) #encodes unsafe / reserved chars in the user input (such as in ANIMALS & PRODUCTS)
 
     # make the request
-    print(base_url)
     r = requests.get(base_url)
     
     # validate the response
