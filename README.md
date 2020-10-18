@@ -43,7 +43,7 @@ Find the number of observations for Wake County in North Carolina:<br>
 
 ### nass_data
 <ins>Description</ins><br>
-Sends query to Quick Stats API from given parameter values. Data request is limited to 50,000records per the API. Use <em>nass_count</em> to determine number of records in query.<br>
+Sends query to Quick Stats API from given parameter values. Data request is limited to 50,000 records per the API. Use <em>nass_count</em> to determine number of records in query.<br>
 
 <ins>Arguments</ins><br>
 * Inital argument is your API key for NASS Quickstats

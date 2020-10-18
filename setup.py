@@ -16,7 +16,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/jackheinemann/nass_python",
     author="Jack Heinemann",
-    author_email="jack@oenoke.com"",
+    author_email="jack@oenoke.com",
     license="MIT",
     packages=find_packages(exclude=("tests",)),
     include_package_data=True,
